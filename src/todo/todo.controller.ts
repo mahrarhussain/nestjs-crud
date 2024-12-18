@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { CreateTodoDto } from './todo.dto';
@@ -19,17 +20,21 @@ export class TodoController {
     return this.appsService.createTodo(data);
   }
 
-  @Get('/todo')
+  @Get('/')
   getTodo() {
     return this.appsService.getTodos();
   }
 
-  @Put('/todo/:id')
+  @Get('/queries')
+  getTodoByQuery(@Query('searchFilter') searchFilter: string) {
+    return searchFilter;
+  }
+  @Put('/:id')
   updateTodo(@Param('id') id: number, @Body() data) {
     return this.appsService.updateTodo(data, id);
   }
 
-  @Delete('/todo/:id')
+  @Delete('/:id')
   delTodo(@Param('id') id: number) {
     return this.appsService.delTodoById(id);
   }
